@@ -1,21 +1,14 @@
-import { SidebarMenuGroups } from "@core/components/app-sidebar";
+// import { SidebarMenuGroups } from "@core/components/app-sidebar";
 import { ConfirmationDialog, type ConfirmationDialogProps } from "@core/components/ui/confirmation";
-// import { BrandConfig, ContentConfig } from "@core/configs/content-config";
-// import { FeatureFlags } from "@core/configs/feature-flags";
 import { AuthEndpoints } from "@authentication/domain";
-// import { BillingFeatureFlags } from "@core/modules/billing/billing-api";
-// import { DashboardConfig } from "@core/modules/dashboard";
-// import { ProfileManagementInterface } from "@core/modules/profile/profile-api";
 import {
-  createContext,
-  useContext,
   useEffect,
   useState,
-  type Context,
   type ReactNode
 } from "react";
 import { QueryProvider, type AppQueryClient } from "./query-provider";
 import { CoreContext } from "./use-core";
+import { SidebarMenuGroups } from "@core/domain";
 
 export type CoreContextType = {
   theme: string

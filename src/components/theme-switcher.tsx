@@ -1,5 +1,5 @@
-import { Button } from "@kit/components/ui/button";
-import { useCore } from "@kit/contexts/core-context";
+import { Button } from "@core/components/ui/button";
+import { useCore } from "@core/contexts/use-core";
 import { cn } from "@core/lib/utils";
 import { Moon, Sun } from "lucide-react";
 

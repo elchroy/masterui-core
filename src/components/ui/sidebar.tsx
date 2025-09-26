@@ -5,24 +5,24 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { PanelLeftIcon } from "lucide-react"
 import * as React from "react"
 
-import { Button } from "@kit/components/ui/button"
-import { Input } from "@kit/components/ui/input"
-import { Separator } from "@kit/components/ui/separator"
+import { Button } from "@core/components/ui/button"
+import { Input } from "@core/components/ui/input"
+import { Separator } from "@core/components/ui/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@kit/components/ui/sheet"
-import { Skeleton } from "@kit/components/ui/skeleton"
+} from "@core/components/ui/sheet"
+import { Skeleton } from "@core/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@kit/components/ui/tooltip"
-import { useIsMobile } from "@kit/hooks/use-mobile"
+} from "@core/components/ui/tooltip"
+import { useIsMobile } from "@core/contexts/use-mobile"
 import { cn } from "@core/lib/utils"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
