@@ -1,98 +1,114 @@
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@kit/components/ui/pagination";
+"use client";
 
-export interface PaginationData {
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  pageSize: number;
-}
+import * as React from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@core/components/ui/pagination";
+import { PaginatedData } from "@private/domain";
 
-interface PaginationControlsProps {
-  paginationData: PaginationData;
+interface PaginationControllerProps<T> {
+  data: PaginatedData<T>;
   onPageChange: (page: number) => void;
+  maxPageButtons?: number; // how many numbered buttons to show
 }
 
+export function PaginationController<T>({
+  data,
+  onPageChange,
+  maxPageButtons = 5,
+}: PaginationControllerProps<T>) {
+  const { page, pageSize, total, hasNext, hasPrevious } = data;
 
-export function PaginationControls({ paginationData, onPageChange }: PaginationControlsProps) {
-  const {
-    currentPage,
-    totalPages,
-    // totalItems,
-    // pageSize,
-  } = paginationData;
+  const totalPages = Math.ceil(total / pageSize);
 
-  // Calculate page range to show
-  const getPageNumbers = () => {
-    const delta = 2; // Number of pages to show on each side
-    const range = [];
-    const rangeWithDots = [];
-
-    for (
-        let i = Math.max(2, currentPage - delta);
-        i <= Math.min(totalPages - 1, currentPage + delta);
-        i++
-    ) {
-      range.push(i);
+  const getPageNumbers = (): (number | "ellipsis")[] => {
+    if (totalPages <= maxPageButtons) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    if (currentPage - delta > 2) {
-      rangeWithDots.push(1, '...');
-    } else {
-      rangeWithDots.push(1);
+    const half = Math.floor(maxPageButtons / 2);
+    let start = Math.max(1, page - half);
+    let end = Math.min(totalPages, page + half);
+
+    if (start === 1) {
+      end = maxPageButtons - 1;
+    } else if (end === totalPages) {
+      start = totalPages - (maxPageButtons - 2);
     }
 
-    rangeWithDots.push(...range);
-
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push('...', totalPages);
-    } else {
-      rangeWithDots.push(totalPages);
+    const pages: (number | "ellipsis")[] = [];
+    if (start > 1) {
+      pages.push(1, "ellipsis");
     }
 
-    return rangeWithDots.filter((item, index, arr) => arr.indexOf(item) === index);
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < totalPages) {
+      pages.push("ellipsis", totalPages);
+    }
+
+    return pages;
   };
 
-  // const startItem = (currentPage - 1) * pageSize + 1;
-  // const endItem = Math.min(currentPage * pageSize, totalItems);
+  const pageNumbers = getPageNumbers();
 
   return (
-      <div className="flex items-center justify-between ">
-        {/*<div className="text-xs text-muted-foreground">*/}
-        {/*    Showing {startItem} to {endItem} of {totalItems} entries*/}
-        {/*</div>*/}
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                  onClick={() => onPageChange(currentPage - 1)}
-                  className={currentPage <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-              />
-            </PaginationItem>
+    <Pagination>
+      <PaginationContent>
+        {/* Previous button */}
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={(e) => {
+              e.preventDefault();
+              if (hasPrevious) onPageChange(page - 1);
+            }}
+            aria-disabled={!hasPrevious}
+            className={!hasPrevious ? "opacity-50 pointer-events-none" : ""}
+          />
+        </PaginationItem>
 
-            {getPageNumbers().map((pageNum, idx) => (
-                <PaginationItem key={idx}>
-                  {pageNum === '...' ? (
-                      <span className="px-3 py-2">...</span>
-                  ) : (
-                      <PaginationLink
-                          onClick={() => onPageChange(pageNum as number)}
-                          isActive={pageNum === currentPage}
-                          className="cursor-pointer"
-                      >
-                        {pageNum}
-                      </PaginationLink>
-                  )}
-                </PaginationItem>
-            ))}
-
-            <PaginationItem>
-              <PaginationNext
-                  onClick={() => onPageChange(currentPage + 1)}
-                  className={currentPage >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-              />
+        {/* Page number buttons */}
+        {pageNumbers.map((p, i) =>
+          p === "ellipsis" ? (
+            <PaginationItem key={`ellipsis-${i}`}>
+              <PaginationEllipsis />
             </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+          ) : (
+            <PaginationItem key={p}>
+              <PaginationLink
+                isActive={p === page}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onPageChange(p);
+                }}
+              >
+                {p}
+              </PaginationLink>
+            </PaginationItem>
+          )
+        )}
+
+        {/* Next button */}
+        <PaginationItem>
+          <PaginationNext
+            onClick={(e) => {
+              e.preventDefault();
+              if (hasNext) onPageChange(page + 1);
+            }}
+            aria-disabled={!hasNext}
+            className={!hasNext ? "opacity-50 pointer-events-none" : ""}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }

@@ -34,6 +34,9 @@
     "paths": {
       "@core/*": ["./src/*"],
       "@authentication/*": ["../authentication/src/*"],
+      "@forms/*": ["../forms/src/*"],
+      "@private/*": ["../private/src/*"],
+      "@public/*": ["../public/src/*"],
       "@crud/*": ["../crud/src/*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
