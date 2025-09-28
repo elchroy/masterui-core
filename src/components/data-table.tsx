@@ -14,16 +14,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@kit/components/ui/table";
-import type { BaseEntity } from "@kit/shared/domain";
+} from "@core/components/ui/table";
 import { useState } from "react";
+import { FieldValues } from "react-hook-form";
 
-interface DataTableProps<T extends BaseEntity> {
+interface DataTableProps<T extends FieldValues> {
   columns: ColumnDef<T>[]
   data: T[]
 }
 
-export function DataTable<T extends BaseEntity>({
+export function DataTable<T extends FieldValues>({
   columns,
   data,
 }: DataTableProps<T>) {

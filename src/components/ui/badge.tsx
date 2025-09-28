@@ -17,6 +17,18 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+        success:
+          "border-transparent bg-green-500 text-white [a&]:hover:bg-green-500/90 focus-visible:ring-green-500/20 dark:focus-visible:ring-green-500/40",
+        warning:
+          "border-transparent bg-yellow-500 text-white [a&]:hover:bg-yellow-500/90 focus-visible:ring-yellow-500/20 dark:focus-visible:ring-yellow-500/40",
+        info: "border-transparent bg-blue-500 text-white [a&]:hover:bg-blue-500/90 focus-visible:ring-blue-500/20 dark:focus-visible:ring-blue-500/40",
+        purple:
+          "border-transparent bg-purple-500 text-white [a&]:hover:bg-purple-500/90 focus-visible:ring-purple-500/20 dark:focus-visible:ring-purple-500/40",
+        pink: "border-transparent bg-pink-500 text-white [a&]:hover:bg-pink-500/90 focus-visible:ring-pink-500/20 dark:focus-visible:ring-pink-500/40",
+        blue: "border-transparent bg-blue-500 text-white [a&]:hover:bg-blue-500/90 focus-visible:ring-blue-500/20 dark:focus-visible:ring-blue-500/40",
+        green:
+          "border-transparent bg-green-500 text-white [a&]:hover:bg-green-500/90 focus-visible:ring-green-500/20 dark:focus-visible:ring-green-500/40",
+        red: "border-transparent bg-red-500 text-white [a&]:hover:bg-red-500/90 focus-visible:ring-red-500/20 dark:focus-visible:ring-red-500/40",
       },
     },
     defaultVariants: {
